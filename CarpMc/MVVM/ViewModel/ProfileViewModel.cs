@@ -2,16 +2,16 @@
 using CarpMc.MVVM.Model;
 using CarpMc.MVVM.View;
 using CarpMc.Utils;
+using CommunityToolkit.Mvvm.Input;
 using System.Windows;
 using System.Windows.Input;
 
 namespace CarpMc.MVVM.ViewModel
 {
-    public class ProfileViewModel : Core.ViewModel
+    public partial class ProfileViewModel : Core.ViewModel
     {
         private Sqlite sqlite = new Sqlite();
 
-        public ICommand? LoginCommand { get; set; }
 
         private string? _username;
         public string? Username

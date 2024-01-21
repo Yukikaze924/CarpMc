@@ -88,7 +88,6 @@
                         Height="54" Width="190"
                         FontWeight="Heavy" FontSize="20"
                         Click="Button_Click"
-                        Command="{Binding LoginCommand}"
                         Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToLoginVisibility}}"
                     ></Button>
                     <Button Content="Play" Style="{StaticResource startButton}"
