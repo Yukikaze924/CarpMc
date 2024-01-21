@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="CarpMc.Components.SerachBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:CarpMc.Components">
+
+
+    <Grid>
+        <TextBlock Margin="40 0 0 0" VerticalAlignment="Center" Foreground="#594f7f"
+                                IsHitTestVisible="False" Panel.ZIndex="1" Text=""
+                                />
+
+        <TextBox x:Name="txtSearch" Style="{StaticResource searchTextbox}" KeyDown="txtSearch_KeyDown"/>
+
+        <Icon:PackIconMaterial Kind="Magnify" Width="14" Height="14" Foreground="#594f7f"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 0 0 0"/>
+    </Grid>
+
+</UserControl>

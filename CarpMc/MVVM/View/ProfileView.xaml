@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="CarpMc.MVVM.View.ProfileView"
+             
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="547" d:DesignWidth="658"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
+             xmlns:local="clr-namespace:CarpMc"
+             xmlns:viewModel="clr-namespace:CarpMc.MVVM.ViewModel"
+             xmlns:utils="clr-namespace:CarpMc.Utils"
+             >
+
+    <UserControl.DataContext>
+        <viewModel:ProfileViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <utils:BoolToLoginVisibility x:Key="BoolToLoginVisibility" />
+        <utils:TrueToVisible x:Key="TrueToVisible" />
+    </UserControl.Resources>
+
+    <Border CornerRadius="30" Margin="20 20 20 20" HorizontalAlignment="Left" Width="618">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#6a5dae" Offset="0"/>
+                <GradientStop Color="#54479c" Offset="1.2"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Border.Effect>
+            <DropShadowEffect Color="Black" Direction="320" ShadowDepth="6" Opacity="0.3"/>
+        </Border.Effect>
+
+        <Grid HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<Border Background="#6e60b5" BorderThickness="2" BorderBrush="#8276c0"
+                                CornerRadius="30" Margin="0 0 0 0"/>-->
+            <Border Background="Transparent" BorderThickness="0" CornerRadius="30" Margin="0 0 0 0"/>
+
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <StackPanel Margin="10 10 0 0">
+                    <materialDesign:MaterialDateDisplay Margin="20" Foreground="White"/>
+                </StackPanel>
+                <StackPanel>
+                    <Ellipse Width="76" Height="76" Margin="76 -64 -76 0">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="../../Images/cat.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" Width="309">
+
+                <StackPanel>
+                    <Rectangle Width="76" Height="76" Margin="0 40 0 20">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="../../Images/steve-face.png" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{Binding Username}" Style="{StaticResource titleText}"
+                                               FontSize="26" Foreground="WhiteSmoke"
+                                               FontWeight="Light" HorizontalAlignment="Center"
+                                               Margin="0 10 0 0"/>
+
+                    <!--<Button Content="Login" Style="{StaticResource startButton}"
+                            Margin="0 76 0 0"
+                            Height="54" Width="190"
+                            FontWeight="Heavy" FontSize="20"
+                            
+                            ></Button>-->
+
+                    <Button Content="Login" Style="{StaticResource startButton}"
+                        Margin="0 76 0 0"
+                        Height="54" Width="190"
+                        FontWeight="Heavy" FontSize="20"
+                        Click="Button_Click"
+                        Command="{Binding LoginCommand}"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToLoginVisibility}}"
+                    ></Button>
+                    <Button Content="Play" Style="{StaticResource startButton}"
+                        Margin="0 76 0 0"
+                        Height="54" Width="190"
+                        FontWeight="Heavy" FontSize="20"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource TrueToVisible}}"
+                    ></Button>
+
+                </StackPanel>
+            </Grid>
+            
+            <Grid Grid.Row="0" Grid.Column="1">
+
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1">
+
+                <StackPanel>
+                    <materialDesign:Card Margin="10" Padding="10" Background="#54479c" Width="270" Height="100" UniformCornerRadius="20">
+                        <StackPanel>
+                            <materialDesign:Card>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                                    <Image Source="../../Images/Grass.png" Width="40" Height="40" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Microsoft" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" FontSize="19"/>
+                                    <Button Style="{StaticResource menuButton}" Content="Sign in" Margin="40 0 0 0" BorderThickness="2" BorderBrush="#6a5dae" Click="Microsoft_Window"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="10" Padding="10" Background="#54479c" Width="270" Height="100" UniformCornerRadius="20">
+                        <StackPanel>
+                            <materialDesign:Card>
+                                <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                                    <Image Source="../../Images/logo-color.png" Width="40" Height="40" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Carp.org " Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" FontSize="19"/>
+                                    <Button Style="{StaticResource menuButton}" Content="Sign in" Margin="40 0 0 0" BorderThickness="2" BorderBrush="#6a5dae" Click="Carp_Window"/>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+    </Border>
+
+</UserControl>

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>True</UseWPF>
+    <GenerateGuids>false</GenerateGuids>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\cat.png" />
+    <None Remove="Images\google.png" />
+    <None Remove="Images\Grass.png" />
+    <None Remove="Images\logo-color.png" />
+    <None Remove="Images\steve-face.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="Panuon.UI.Silver" Version="1.1.3.4" />
+    <PackageReference Include="ProjBobcat" Version="1.40.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="KMCCC.Pro">
+      <HintPath>..\..\..\..\.dll\KMCCC.Pro.dll</HintPath>
+    </Reference>
+    <Reference Include="microsoft_launcher">
+      <HintPath>..\..\..\..\.dll\microsoft_launcher.dll</HintPath>
+    </Reference>
+    <Reference Include="SquareMinecraftLauncherCore">
+      <HintPath>..\..\..\..\.dll\SquareMinecraftLauncherCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\google.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logo-color.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\steve-face.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
