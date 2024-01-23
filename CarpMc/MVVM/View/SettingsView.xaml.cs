@@ -61,11 +61,17 @@ namespace CarpMc.MVVM.View
                     {
                         case MessageBoxResult.OK:
 
-                            Window currentWindow = Window.GetWindow(this);
-                            currentWindow.Hide();
-                            Thread.Sleep(1000);
-                            new MainWindow().Show();                          
-                            currentWindow.Close();
+                            //Window currentWindow = Window.GetWindow(this);
+
+                            //currentWindow.Hide();
+                            //Thread.Sleep(1000);
+                            //new MainWindow().Show();
+                            //currentWindow.Close();
+
+                            System.Reflection.Assembly.GetEntryAssembly();
+                            string startpath = System.IO.Directory.GetCurrentDirectory();
+                            System.Diagnostics.Process.Start(startpath + "\\CarpMc.exe");
+                            Application.Current.Shutdown();
 
                             break;
 

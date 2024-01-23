@@ -103,5 +103,21 @@ namespace CarpMc
             Storyboard loadingAnimation = (Storyboard)this.Resources["WindowLoadingAnimation"];
             loadingAnimation.Begin();
         }
+
+        private void ResetWindowLocation(object sender, RoutedEventArgs e)
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+
+            // 计算窗口应该出现的位置
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            double left = (screenWidth - windowWidth) / 2;
+            double top = (screenHeight - windowHeight) / 2;
+
+            // 设置窗口的位置
+            this.Left = left;
+            this.Top = top;
+        }
     }
 }

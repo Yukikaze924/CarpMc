@@ -13,7 +13,7 @@
         xmlns:viewModel="clr-namespace:CarpMc.MVVM.ViewModel"
         xmlns:components="clr-namespace:CarpMc.Components"
         
-        Height="720" Width="1080" Background="Transparent" ResizeMode="NoResize"
+        Title="CarpMc Launcher" Height="720" Width="1080" Background="Transparent" ResizeMode="NoResize"
         AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Window.Resources>
@@ -143,7 +143,7 @@
                                 <Button Style="{StaticResource closeButton}" Click="minimizeButtonClicked">
                                     <Icon:PackIconMaterial Kind="WindowMinimize" Style="{StaticResource closeButtinIcon}"/>
                                 </Button>
-                                <Button Style="{StaticResource closeButton}">
+                                <Button Style="{StaticResource closeButton}" Click="ResetWindowLocation">
                                     <Icon:PackIconMaterial Kind="WindowMaximize" Style="{StaticResource closeButtinIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource closeButton}" Click="closeButtonClicked">

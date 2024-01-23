@@ -1,55 +1,51 @@
 ﻿using CarpMc.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ProjBobcat.Platforms.Windows;
-using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace CarpMc.MVVM.ViewModel
 {
-     class SettingsViewModel : Core.ViewModel
-    {
+     partial class SettingsViewModel : ObservableObject
+     {
         private Sqlite sqlite = new Sqlite();
 
+        [ObservableProperty]
         private string? _javaPath;
-        public string? JavaPath { 
+        //public string? JavaPath { 
 
-            get { 
-                return _javaPath;
-            }
-            set
-            {
-                _javaPath = value;
-                OnPropertyChanged(nameof(JavaPath));
-            }
-        }
+        //    get { 
+        //        return _javaPath;
+        //    }
+        //    set
+        //    {
+        //        _javaPath = value;
+        //        OnPropertyChanged(nameof(JavaPath));
+        //    }
+        //}
 
-        private string? _javaList;
-        public string? JavaList
-        {
-            get { return _javaList; }
-            set
-            {
-                _javaList = value;
-                OnPropertyChanged(nameof(JavaList));
-            }
-        }
-
+        [ObservableProperty]
         private string? _gamePath;
-        public string? GamePath
-        {
-            get
-            {
-                return _gamePath;
-            }
-            set
-            {
-                _gamePath = value;
-                OnPropertyChanged(nameof(GamePath));
-            }
-        }
+        //public string? GamePath
+        //{
+        //    get
+        //    {
+        //        return _gamePath;
+        //    }
+        //    set
+        //    {
+        //        _gamePath = value;
+        //        OnPropertyChanged(nameof(GamePath));
+        //    }
+        //}
+
+        [ObservableProperty]
+        private bool versionIsolation;
 
         public SettingsViewModel()
         {
             sqlite.initializeDatabaseTable();
+
             try
             {
                 JavaPath = sqlite.getDataFromSettings("JavaPath") ?? SystemInfoHelper.FindJavaWindows().ToList().First();
@@ -66,7 +62,15 @@ namespace CarpMc.MVVM.ViewModel
             {
                 MessageBox.Show(ex.Message + "The game directory is not set correctly");
             }
+
+            VersionIsolation = bool.Parse(sqlite.getDataFromSettings("VersionIsolation"));
         }
 
+        [RelayCommand]
+        private void VersionIsolationToggleButtonClicked()
+        {
+            string isChecked = VersionIsolation ? "true" : "false";
+            sqlite.insertDataIntoSettings("VersionIsolation", isChecked);
+        }
     }
 }
