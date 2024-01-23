@@ -22,6 +22,7 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="ToggleButton" TargetType="ToggleButton" BasedOn="{StaticResource MaterialDesignSwitchToggleButton}">
@@ -36,38 +37,50 @@
                     </ResourceDictionary>
                 </Style.Resources>
             </Style>
+            <Style x:Key="ComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Style.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <!--Depending on which control style you use, you may not need all of these -->
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Style.Resources>
+                <Setter Property="Width" Value="120"/>
+            </Style>
 
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="605*"/>
-            <ColumnDefinition Width="53*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Margin="24 0 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="24,0,0,474" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <StackPanel Grid.Row="0" Margin="0 0 0 20">
             <TextBlock Text="Settings" Style="{StaticResource subtitleText}"/>
-            <Separator Background="#877cc5" Height="2" Margin="0 10 0 10"/>
+            <!--<Separator Background="#877cc5" Height="2" Margin="0 10 0 10"/>-->
         </StackPanel>
 
-        <TabControl Grid.Row="1" Margin="24,0,0,0" Grid.ColumnSpan="2">
+        <TabControl Grid.Row="1">
             <TabItem Header="General" FontWeight="SemiBold" Width="92">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="78*"/>
-                        <ColumnDefinition Width="239*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="2" Margin="24 20 0 0" Orientation="Horizontal">
+                        <TextBlock Text="Language" Style="{StaticResource headerText}" Width="120"/>
+                        <ComboBox Style="{StaticResource ComboBox}">
+                            <ComboBoxItem IsSelected="True">English</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
 
                 </Grid>
             </TabItem>
@@ -102,19 +115,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-
-        <!--<StackPanel Grid.Row="1" Margin="24 20 0 0" Orientation="Horizontal">
-            <TextBlock Text="Java Path: " Style="{StaticResource headerText}" Width="120"/>
-            <TextBox Name="selectedFolderTextBox" IsReadOnly="True" Width="240" BorderThickness="0" BorderBrush="LightGray" TextAlignment="Justify" VerticalContentAlignment="Center" Text="{Binding JavaPath}"/>
-            <Button Name="selectFolderButton" Content="Choose..." Click="JavaSelectorClicked" Width="60"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Margin="24 20 0 0" Orientation="Horizontal">
-            <TextBlock Text="Game Path: " Style="{StaticResource headerText}" Width="120"/>
-            <TextBox Name="gamePathTextBox" IsReadOnly="True" Width="240" BorderThickness="0" BorderBrush="LightGray" TextAlignment="Justify" VerticalContentAlignment="Center" Text="{Binding GamePath}"/>
-            <Button Name="gamePathButton" Content="Choose..." Click="gamePathButton_Click" Width="60"/>
-            <Icon:PackIconMaterial Kind="AlertCircle" Foreground="Gray" VerticalAlignment="Center" Margin="10 0 10 0" Width="14" Height="14"/>
-            <TextBlock Text="This setting required a restart" VerticalAlignment="Center" Foreground="Gray" FontSize="12"/>
-        </StackPanel>-->
 
     </Grid>
 
