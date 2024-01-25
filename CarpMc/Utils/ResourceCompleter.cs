@@ -1,4 +1,6 @@
-﻿using ProjBobcat.Class.Model;
+﻿using Newtonsoft.Json;
+using ProjBobcat.Class.Model;
+using ProjBobcat.Class.Model.Mojang;
 using ProjBobcat.DefaultComponent;
 using ProjBobcat.DefaultComponent.Launch.GameCore;
 using ProjBobcat.DefaultComponent.ResourceInfoResolver;
@@ -6,8 +8,10 @@ using ProjBobcat.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CarpMc.Utils
 {
@@ -17,34 +21,92 @@ namespace CarpMc.Utils
 
         public VersionInfo currentVersion;
 
+        public AssetInfoResolver assetInfoResolver;
+        public LibraryInfoResolver libraryInfoResolver;
+        public VersionInfoResolver versionInfoResolver;
+
         public ResourceCompleter(VersionInfo currentVersion)
         {
             this.currentVersion = currentVersion;
         }
 
+        public async void initInfoResolver()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("https://launchermeta.mojang.com/mc/game/version_manifest.json");
+                    response.EnsureSuccessStatusCode(); // 确保请求成功
+
+                    var responseJson = await response.Content.ReadAsStringAsync();
+
+                    // 将 JSON 响应转换为 ProjBobcat 类型
+                    var manifest = JsonConvert.DeserializeObject<VersionManifest>(responseJson);
+                    
+                    // 获取 Versions 列表
+                    var versions = manifest.Versions;
+
+                    assetInfoResolver = new AssetInfoResolver
+                    {
+                        AssetIndexUriRoot = "https://launchermeta.mojang.com/",
+                        AssetUriRoot = "https://resources.download.minecraft.net/",
+                        BasePath = core.RootPath,
+                        VersionInfo = currentVersion,
+                        CheckLocalFiles = true,
+                        Versions = versions // 在上一步获取到的 Versions 数组
+                    };
+
+                    libraryInfoResolver = new LibraryInfoResolver
+                    {
+                        BasePath = core.RootPath,
+                        ForgeUriRoot = "https://files.minecraftforge.net/maven/",
+                        ForgeMavenUriRoot = "https://maven.minecraftforge.net/",
+                        ForgeMavenOldUriRoot = "https://files.minecraftforge.net/maven/",
+                        FabricMavenUriRoot = "https://maven.fabricmc.net/",
+                        LibraryUriRoot = "https://libraries.minecraft.net/",
+                        VersionInfo = currentVersion,
+                        CheckLocalFiles = true
+                    };
+
+                    versionInfoResolver = new VersionInfoResolver
+                    {
+                        BasePath = core.RootPath,
+                        VersionInfo = currentVersion,
+                        CheckLocalFiles = true
+                    };
+                }
+                catch (HttpRequestException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
+        }
+
         public async void completeResources()
         {
-            var drc = new DefaultResourceCompleter
+            var completer = new DefaultResourceCompleter
             {
-                ResourceInfoResolvers = new List<IResourceInfoResolver>(2)
+                MaxDegreeOfParallelism = 2,
+                ResourceInfoResolvers = new List<IResourceInfoResolver>
                 {
-                    new AssetInfoResolver
-                    {
-                        AssetIndexUriRoot = "https://download.mcbbs.net/",
-                        AssetUriRoot = "https://download.mcbbs.net/assets/",
-                        BasePath = core.RootPath,
-                        VersionInfo = currentVersion
-                    },
-                    new LibraryInfoResolver
-                    {
-                        BasePath = core.RootPath,
-                        LibraryUriRoot = "https://download.mcbbs.net/maven/",
-                        VersionInfo = currentVersion
-                    }
-                }
+                    assetInfoResolver, libraryInfoResolver, versionInfoResolver
+                },
+                TotalRetry = 2,
+                CheckFile = true,
+                DownloadParts = 2
             };
 
-            await drc.CheckAndDownloadTaskAsync().ConfigureAwait(false);
+            var result = await completer.CheckAndDownloadTaskAsync();
+
+            if (result.TaskStatus == TaskResultStatus.Error && (result.Value?.IsLibDownloadFailed ?? false))
+            {
+                // 在完成补全后，资源检查器会返回执行结果。
+                // 您可以检查 result 中的属性值来确定补全是否完成
+                MessageBox.Show("Error");
+                // IsLibDownloadFailed 会反映启动必须的库文件是否已经成功补全
+                // 通常来说，如果库文件的补全失败，很有可能会导致游戏的启动失败
+            }
         }
     }
 }

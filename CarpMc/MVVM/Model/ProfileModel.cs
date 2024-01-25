@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarpMc.MVVM.Model
+﻿namespace CarpMc.MVVM.Model
 {
     public class ProfileModel
     {

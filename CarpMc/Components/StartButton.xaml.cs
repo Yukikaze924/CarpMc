@@ -31,11 +31,13 @@ namespace CarpMc.Components
                 var firstGame = versionCombo.SelectedItem as VersionInfo;
                 var javaPath = sqlite.getDataFromSettings("JavaPath");
 
+                bool versionIsolation = (sqlite.getDataFromSettings("VersionIsolation") != null) ? bool.Parse(sqlite.getDataFromSettings("VersionIsolation")) : false;
+
                 var launchSettings = new LaunchSettings
                 {
 
                     Version = firstGame.Id, // 需要启动的游戏ID
-                    VersionInsulation = false, // 版本隔离
+                    VersionInsulation = versionIsolation, // 版本隔离
                     GameResourcePath = core.RootPath, // 资源根目录
                     GamePath = core.RootPath, // 游戏根目录，如果有版本隔离则应该改为GamePathHelper.GetGamePath(Core.RootPath, versionId)
                     VersionLocator = core.VersionLocator, // 游戏定位器

@@ -48,7 +48,9 @@
                         </ResourceDictionary.MergedDictionaries>
                     </ResourceDictionary>
                 </Style.Resources>
-                <Setter Property="Width" Value="120"/>
+                <Setter Property="Width" Value="190"/>
+                <Setter Property="FontWeight" Value="Heavy"/>
+                <Setter Property="FontSize" Value="14"/>
             </Style>
 
         </ResourceDictionary>
@@ -66,6 +68,7 @@
         </StackPanel>
 
         <TabControl Grid.Row="1">
+            
             <TabItem Header="General" FontWeight="SemiBold" Width="92">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -79,6 +82,7 @@
                         <TextBlock Text="Language" Style="{StaticResource headerText}" Width="120"/>
                         <ComboBox Style="{StaticResource ComboBox}">
                             <ComboBoxItem IsSelected="True">English</ComboBoxItem>
+                            <ComboBoxItem >中文</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
 
@@ -95,13 +99,13 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Margin="24 20 0 0" Orientation="Horizontal">
-                        <TextBlock Text="Java Path: " Style="{StaticResource headerText}" Width="120"/>
+                        <TextBlock Text="Java Path" Style="{StaticResource headerText}" Width="120"/>
                         <TextBox Name="selectedFolderTextBox" IsReadOnly="True" Width="240" BorderThickness="0" BorderBrush="LightGray" TextAlignment="Justify" VerticalContentAlignment="Center" Text="{Binding JavaPath}"/>
                         <Button Name="selectFolderButton" Content="Choose..." Click="JavaSelectorClicked" Width="92"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="24 20 0 0" Orientation="Horizontal">
-                        <TextBlock Text="Game Path: " Style="{StaticResource headerText}" Width="120"/>
+                        <TextBlock Text="Game Path" Style="{StaticResource headerText}" Width="120"/>
                         <TextBox Name="gamePathTextBox" IsReadOnly="True" Width="240" BorderThickness="0" BorderBrush="LightGray" TextAlignment="Justify" VerticalContentAlignment="Center" Text="{Binding GamePath}"/>
                         <Button Name="gamePathButton" Content="Choose..." Click="gamePathButton_Click" Width="92"/>
                         <Icon:PackIconMaterial Kind="AlertCircle" Foreground="Gray" VerticalAlignment="Center" Margin="10 0 5 0" Width="14" Height="14"/>
