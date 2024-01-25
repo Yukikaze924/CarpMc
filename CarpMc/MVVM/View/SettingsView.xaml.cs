@@ -15,6 +15,8 @@ namespace CarpMc.MVVM.View
         public SettingsView()
         {
             InitializeComponent();
+
+            this.DataContext = new SettingsViewModel();
         }
 
         private void JavaSelectorClicked(object sender, RoutedEventArgs e)

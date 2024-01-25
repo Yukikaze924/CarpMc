@@ -1,4 +1,7 @@
-﻿using ProjBobcat.DefaultComponent.Launch;
+﻿using Newtonsoft.Json;
+using ProjBobcat.Class.Helper;
+using ProjBobcat.Class.Model.Mojang;
+using ProjBobcat.DefaultComponent.Launch;
 using ProjBobcat.DefaultComponent.Launch.GameCore;
 using ProjBobcat.DefaultComponent.Logging;
 
@@ -29,5 +32,16 @@ namespace CarpMc.Utils
 
             return core;
         }
+
+        public static async Task<VersionManifest?> GetVersionManifestTaskAsync()
+        {
+            const string vmUrl = "http://launchermeta.mojang.com/mc/game/version_manifest.json";
+            var contentRes = await HttpHelper.Get(vmUrl);
+            var content = await contentRes.Content.ReadAsStringAsync();
+            var model = JsonConvert.DeserializeObject<VersionManifest>(content);
+
+            return model;
+        }
+
     }
 }

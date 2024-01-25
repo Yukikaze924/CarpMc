@@ -76,9 +76,9 @@
         <!--#region Start Button-->
         <Style x:Key="startButton" TargetType="Button">
             <Setter Property="Content" Value="Launch"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <!--<Setter Property="Background" Value="Transparent"/>-->
             <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="76"/>
+            <Setter Property="Height" Value="75"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -90,7 +90,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="14" Background="#7163ba">
+                        <Border CornerRadius="10" Background="#7163ba">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -197,7 +197,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="Padding" Value="6, 3, 4, 3"/>
-            <Setter Property="Margin" Value="0 114"/>
+            <!--<Setter Property="Margin" Value="0 114"/>-->
             <!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">

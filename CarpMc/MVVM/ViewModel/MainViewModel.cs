@@ -3,12 +3,10 @@ using CarpMc.MVVM.Model;
 using ProjBobcat.Class.Model;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
 
 namespace CarpMc.MVVM.ViewModel
 {
-    class MainViewModel : Core.ViewModel
+    partial class MainViewModel : Core.ViewModel
     {
 
         public HomeViewModel HomeVM { get; set; }
@@ -17,14 +15,17 @@ namespace CarpMc.MVVM.ViewModel
 
         public ObservableCollection<MenuButton> MenuButtons { get; set; }
 
-        private List<VersionInfo>? _versions;
-        public List<VersionInfo>? Versions
+        private List<String>? _versions;
+        public List<String> Versions
         {
-            get { return _versions; }
+            get
+            {
+                return _versions;
+            }
             set
             {
                 _versions = value;
-                OnPropertyChanged(nameof(Versions));
+                OnPropertyChanged();
             }
         }
 
@@ -47,13 +48,13 @@ namespace CarpMc.MVVM.ViewModel
 
             CurrentView = HomeVM;
 
-            Versions = Utils.Core.InitLauncherCore().VersionLocator.GetAllGames().ToList();
+            Versions = Utils.Core.InitLauncherCore().VersionLocator.GetAllGames().ToList().Select(v => v.Id).ToList();
 
             MenuButtons = new ObservableCollection<MenuButton>
             {
                 new MenuButton { Name = "HomeVariant", NavigateCommand = new RelayCommand(NavigateToHome), isSelected = true },
-                new MenuButton { Name = "FaceWomanProfile", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false },
-                new MenuButton { Name = "ApplicationSettings", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false },
+                new MenuButton { Name = "Account", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false },
+                new MenuButton { Name = "Cog", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false },
             };
         }
 
@@ -62,8 +63,8 @@ namespace CarpMc.MVVM.ViewModel
             CurrentView = HomeVM;
             MenuButtons.Clear();
             MenuButtons.Add(new MenuButton { Name = "HomeVariant", NavigateCommand = new RelayCommand(NavigateToHome), isSelected = true });
-            MenuButtons.Add(new MenuButton { Name = "FaceWomanProfile", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false });
-            MenuButtons.Add(new MenuButton { Name = "ApplicationSettings", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false });
+            MenuButtons.Add(new MenuButton { Name = "Account", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false });
+            MenuButtons.Add(new MenuButton { Name = "Cog", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false });
         }
 
         private void NavigateToProfile(object obj)
@@ -71,8 +72,8 @@ namespace CarpMc.MVVM.ViewModel
             CurrentView = ProfileVM;
             MenuButtons.Clear();
             MenuButtons.Add(new MenuButton { Name = "HomeVariant", NavigateCommand = new RelayCommand(NavigateToHome), isSelected = false });
-            MenuButtons.Add(new MenuButton { Name = "FaceWomanProfile", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = true });
-            MenuButtons.Add(new MenuButton { Name = "ApplicationSettings", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false });
+            MenuButtons.Add(new MenuButton { Name = "Account", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = true });
+            MenuButtons.Add(new MenuButton { Name = "Cog", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false });
         }
 
         private void NavigateToSettings(object obj)
@@ -80,8 +81,8 @@ namespace CarpMc.MVVM.ViewModel
             CurrentView = SettingsVM;
             MenuButtons.Clear();
             MenuButtons.Add(new MenuButton { Name = "HomeVariant", NavigateCommand = new RelayCommand(NavigateToHome), isSelected = false });
-            MenuButtons.Add(new MenuButton { Name = "FaceWomanProfile", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false });
-            MenuButtons.Add(new MenuButton { Name = "ApplicationSettings", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = true });
+            MenuButtons.Add(new MenuButton { Name = "Account", NavigateCommand = new RelayCommand(NavigateToProfile), isSelected = false });
+            MenuButtons.Add(new MenuButton { Name = "Cog", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = true });
         }
     }
 }

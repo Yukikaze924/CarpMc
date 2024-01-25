@@ -87,7 +87,7 @@
                         <Separator Background="#877cc5" Margin="20 0 20 64" Height="0.9" VerticalAlignment="Bottom"/>
 
                         <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" Click="closeButtonClicked">
-                            <Icon:PackIconMaterial Kind="LocationExit" Style="{StaticResource menuButtonIcon}"/>
+                            <Icon:PackIconMaterial Kind="Power" Style="{StaticResource menuButtonIcon}"/>
                         </Button>
                         
                     </Grid>
