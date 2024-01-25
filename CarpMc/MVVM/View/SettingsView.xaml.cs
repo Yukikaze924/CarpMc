@@ -19,29 +19,27 @@ namespace CarpMc.MVVM.View
             this.DataContext = new SettingsViewModel();
         }
 
-        private void JavaSelectorClicked(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Select a Java Runtime";
-            openFileDialog.Filter = "All files (*.*)|*.*";
+        //private void JavaSelectorClicked(object sender, RoutedEventArgs e)
+        //{
+        //    OpenFileDialog openFileDialog = new OpenFileDialog();
+        //    openFileDialog.Title = "Select a Java Runtime";
+        //    openFileDialog.Filter = "All files (*.*)|*.*";
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                try
-                {
-                    string selectedFilePath = openFileDialog.FileName;
+        //    if (openFileDialog.ShowDialog() == true)
+        //    {
+        //        try
+        //        {
+        //            string selectedFilePath = openFileDialog.FileName;
 
-                    selectedFolderTextBox.Text = selectedFilePath;
+        //            sqlite.insertDataIntoSettings("JavaPath", selectedFilePath);
+        //        } 
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //        }
 
-                    sqlite.insertDataIntoSettings("JavaPath", selectedFilePath);
-                } 
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-            }
-        }
+        //    }
+        //}
 
         private void gamePathButton_Click(object sender, RoutedEventArgs e)
         {
@@ -88,5 +86,10 @@ namespace CarpMc.MVVM.View
             }
         }
 
+        private void JavaComboBoxSelected(object sender, SelectionChangedEventArgs e)
+        {
+            string? javaPath = JavaListComboBox.SelectedItem.ToString();
+            sqlite.insertDataIntoSettings("JavaPath", javaPath);
+        }
     }
 }

@@ -13,9 +13,11 @@
              xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             
-             d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
              >
+
+    <UserControl.DataContext>
+        <viewModel:SettingsViewModel/>
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -48,14 +50,7 @@
     <Grid>
 
         <StackPanel VerticalAlignment="Bottom" Margin="0 0 0 10">
-            <ComboBox x:Name="versionCombo" Style="{StaticResource ComboBox}" ItemsSource="{Binding Versions}" Margin="0 0 0 50">
-                <!--<ComboBox.BorderBrush>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFCFD5E5" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.BorderBrush>-->
-            </ComboBox>
+            <ComboBox x:Name="versionCombo" Style="{StaticResource ComboBox}" ItemsSource="{Binding GameList}" Margin="0 0 0 50"/>
             <Button Style="{StaticResource startButton}" Click="StartButtonClicked"></Button>
         </StackPanel>
 

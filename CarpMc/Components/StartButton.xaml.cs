@@ -14,7 +14,7 @@ namespace CarpMc.Components
 
         private Sqlite sqlite = new Sqlite();
 
-        private static readonly DefaultGameCore? core = CarpMc.Utils.Core.InitLauncherCore();
+        private static readonly DefaultGameCore? core = Utils.Core.InitLauncherCore();
 
         public StartButton()
         {
