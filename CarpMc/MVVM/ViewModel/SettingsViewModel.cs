@@ -15,11 +15,12 @@ namespace CarpMc.MVVM.ViewModel
      {
         private Sqlite sqlite = new Sqlite();
 
+        private HashSet<string> hashSet = new HashSet<string>();
+
         [ObservableProperty]
         private string? _javaPath;
 
         [ObservableProperty]
-        //private List<string>? _javaList;
         private ObservableCollection<string>? _javaList;
 
         [ObservableProperty]
@@ -34,15 +35,16 @@ namespace CarpMc.MVVM.ViewModel
         public SettingsViewModel()
         {
             sqlite.initializeDatabaseTable();
+            hashSet.UnionWith(ProjBobcat.Class.Helper.SystemInfoHelper.FindJava().ToListAsync().Result);
 
             JavaPath = sqlite.getDataFromSettings("JavaPath");            
 
             GamePath = sqlite.getDataFromSettings("GamePath") ?? ".minecraft";
 
             JavaList = new ObservableCollection<string>(ProjBobcat.Class.Helper.SystemInfoHelper.FindJava().ToListAsync().Result);
-            if (JavaPath!=null)
+            if (JavaPath!=null && hashSet.Contains(JavaPath)==false)
             {
-                JavaList.Add(JavaPath);
+                JavaList.Add(JavaPath); hashSet.Add(JavaPath);
             }
 
             GameList = new ObservableCollection<string>(Utils.Core.InitLauncherCore().VersionLocator.GetAllGames().ToList().Select(v => v.Id).ToList());
@@ -71,6 +73,11 @@ namespace CarpMc.MVVM.ViewModel
                     string selectedFilePath = openFileDialog.FileName;                  
 
                     sqlite.insertDataIntoSettings("JavaPath", selectedFilePath);
+
+                    if (hashSet.Contains(selectedFilePath))
+                    {
+                        return;
+                    }
 
                     JavaList.Add(selectedFilePath);
                 }
@@ -110,7 +117,7 @@ namespace CarpMc.MVVM.ViewModel
                     //GameList.Clear();
                     //GameList = new ObservableCollection<string>(gameStringList);
 
-                    MessageBoxResult result = MessageBox.Show("Do you want to restart? (Recommended)", "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                    MessageBoxResult result = MessageBox.Show("Do you want to restart? (Recommended)", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
                     {
                         case MessageBoxResult.OK:
@@ -120,9 +127,6 @@ namespace CarpMc.MVVM.ViewModel
                             System.Diagnostics.Process.Start(startpath + "\\CarpMc.exe");
                             Application.Current.Shutdown();
 
-                            break;
-
-                        case MessageBoxResult.Cancel:
                             break;
                     }
                 }
