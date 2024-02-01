@@ -1,4 +1,5 @@
-﻿using CarpMc.Utils;
+﻿using CarpMc.MVVM.Model;
+using CarpMc.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -7,6 +8,7 @@ using ProjBobcat.Class.Helper;
 using ProjBobcat.DefaultComponent.Launch;
 using ProjBobcat.Platforms.Windows;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 
 namespace CarpMc.MVVM.ViewModel
@@ -22,9 +24,6 @@ namespace CarpMc.MVVM.ViewModel
 
         [ObservableProperty]
         private ObservableCollection<string>? _javaList;
-
-        [ObservableProperty]
-        private ObservableCollection<string>? _gameList;
 
         [ObservableProperty]
         private string? _gamePath;
@@ -46,8 +45,6 @@ namespace CarpMc.MVVM.ViewModel
             {
                 JavaList.Add(JavaPath); hashSet.Add(JavaPath);
             }
-
-            GameList = new ObservableCollection<string>(Utils.Core.InitLauncherCore().VersionLocator.GetAllGames().ToList().Select(v => v.Id).ToList());
 
             VersionIsolation = sqlite.getDataFromSettings("VersionIsolation")!=null ? bool.Parse(sqlite.getDataFromSettings("VersionIsolation")) : false;
         }
@@ -107,15 +104,7 @@ namespace CarpMc.MVVM.ViewModel
                 {
                     string selectedFolderPath = openFolderDialog.FolderName;
 
-                    sqlite.insertDataIntoSettings("GamePath", selectedFolderPath);
-
-                    //var gameStringList = new DefaultVersionLocator(selectedFolderPath, Utils.Core.InitLauncherCore().ClientToken)
-                    //{
-                    //    LauncherProfileParser = new DefaultLauncherProfileParser(selectedFolderPath, Utils.Core.InitLauncherCore().ClientToken),
-                    //    LauncherAccountParser = new DefaultLauncherAccountParser(selectedFolderPath, Utils.Core.InitLauncherCore().ClientToken)
-                    //}.GetAllGames().ToList().Select(v => v.Id).ToList();
-                    //GameList.Clear();
-                    //GameList = new ObservableCollection<string>(gameStringList);
+                    sqlite.insertDataIntoSettings("GamePath", selectedFolderPath); GamePath = selectedFolderPath;
 
                     MessageBoxResult result = MessageBox.Show("Do you want to restart? (Recommended)", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
                     switch (result)
@@ -134,6 +123,12 @@ namespace CarpMc.MVVM.ViewModel
                 {
                     MessageBox.Show(ex.Message);
                 }
+
+                //Versions.VersionList.Clear();
+                //foreach (var verion in Utils.Core.InitLauncherCore().VersionLocator.GetAllGames())
+                //{
+                //    Versions.VersionList.Add(verion.Id);
+                //};
             }
         }
     }

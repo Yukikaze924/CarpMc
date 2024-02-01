@@ -35,9 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="KMCCC.Pro">
-      <HintPath>..\..\..\..\.dll\KMCCC.Pro.dll</HintPath>
-    </Reference>
     <Reference Include="microsoft_launcher">
       <HintPath>..\..\..\..\.dll\microsoft_launcher.dll</HintPath>
     </Reference>

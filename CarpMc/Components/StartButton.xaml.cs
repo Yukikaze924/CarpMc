@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using ProjBobcat.Class.Model.LauncherProfile;
 using ProjBobcat.Class.Model;
 using ProjBobcat.DefaultComponent.Authenticator;
+using System.IO;
 
 namespace CarpMc.Components
 {
@@ -64,7 +65,7 @@ namespace CarpMc.Components
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("[Error]: Faild on startup!");
+                    MessageBox.Show("[Error]: Faild on startup!" + ex.Message);
                 }
             }
             else

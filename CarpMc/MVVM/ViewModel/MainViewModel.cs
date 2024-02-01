@@ -1,8 +1,11 @@
 ﻿using CarpMc.Core;
 using CarpMc.MVVM.Model;
+using CarpMc.Utils;
 using ProjBobcat.Class.Model;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
 
 namespace CarpMc.MVVM.ViewModel
 {
@@ -43,6 +46,8 @@ namespace CarpMc.MVVM.ViewModel
                 new MenuButton { Name = "Download", NavigateCommand = new RelayCommand(NavigateToDownload), isSelected = false },
                 new MenuButton { Name = "Cog", NavigateCommand = new RelayCommand(NavigateToSettings), isSelected = false },
             };
+
+            Versions.VersionList = new ObservableCollection<string>(Utils.Core.InitLauncherCore().VersionLocator.GetAllGames().ToList().Select(v => v.Id).ToList());
         }
 
         private void NavigateToHome(object obj)

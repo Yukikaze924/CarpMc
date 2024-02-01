@@ -7,16 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="624" d:DesignWidth="192"
              
-             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:CarpMc.Components"
              xmlns:viewModel="clr-namespace:CarpMc.MVVM.ViewModel"
-             xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
              
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              >
 
     <UserControl.DataContext>
-        <viewModel:SettingsViewModel/>
+        <viewModel:GameViewModel/>
     </UserControl.DataContext>
 
     <UserControl.Resources>
@@ -48,12 +47,10 @@
     </UserControl.Resources>
 
     <Grid>
-
         <StackPanel VerticalAlignment="Bottom" Margin="0 0 0 10">
             <ComboBox x:Name="versionCombo" Style="{StaticResource ComboBox}" ItemsSource="{Binding GameList}" Margin="0 0 0 50"/>
             <Button Style="{StaticResource startButton}" Click="StartButtonClicked"></Button>
         </StackPanel>
-
     </Grid>
 
 </UserControl>
