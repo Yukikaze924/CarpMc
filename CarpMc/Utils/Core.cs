@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ProjBobcat.Class.Helper;
+using ProjBobcat.Class.Model.Fabric;
 using ProjBobcat.Class.Model.Mojang;
 using ProjBobcat.DefaultComponent.Launch;
 using ProjBobcat.DefaultComponent.Launch.GameCore;
@@ -43,5 +44,22 @@ namespace CarpMc.Utils
             return model;
         }
 
+        public static async Task<FabricLoaderArtifactModel> GetFabricArtifact()
+        {
+            const string vmUrl = "https://meta.fabricmc.net/v2/versions/loader/1.19.2";
+            var res = await HttpHelper.Get(vmUrl);
+            var responseJson = await res.Content.ReadAsStringAsync();
+
+            // 将 JSON 响应转换为 ProjBobcat 类型
+            var artifacts = JsonConvert.DeserializeObject<List<FabricLoaderArtifactModel>>(responseJson);
+
+            // 获取用户想要安装的版本（示例，非实际代码）
+            var userSelect = 0;
+
+            // 获取单个 Loader Artifact
+            var selectedArtifact = artifacts[userSelect];
+
+            return selectedArtifact;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace CarpMc.Utils
 {
     public class ResourceCompleter
     {
-        public static DefaultGameCore core = Utils.Core.InitLauncherCore();
+        private static DefaultGameCore core = Utils.Core.InitLauncherCore();
 
         public static async Task DownloadResourcesAsync(VersionInfo versionInfo)
         {

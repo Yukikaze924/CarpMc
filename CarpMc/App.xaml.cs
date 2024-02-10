@@ -25,7 +25,7 @@ namespace CarpMc
             // 在应用程序启动时进行静态类字段的访问
             watcher.Path = Utils.Core.InitLauncherCore().RootPath;
             watcher.IncludeSubdirectories = true;
-            watcher.NotifyFilter = NotifyFilters.DirectoryName;
+            watcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Attributes | NotifyFilters.Size | NotifyFilters.LastWrite | NotifyFilters.LastAccess | NotifyFilters.CreationTime | NotifyFilters.Security;
 
             watcher.Created += (o, e) =>
             {

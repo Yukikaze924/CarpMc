@@ -5,17 +5,167 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="531" d:DesignWidth="782"
+             d:DesignHeight="547" d:DesignWidth="658"
              
              xmlns:local="clr-namespace:CarpMc.MVVM.View"
+             xmlns:viewModel="clr-namespace:CarpMc.MVVM.ViewModel"
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              >
 
-    <Border>
+    <UserControl.DataContext>
+        <viewModel:DownloadViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Style.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <!--Depending on which control style you use, you may not need all of these -->
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Style.Resources>
+                <Setter Property="Width" Value="240"/>
+                <Setter Property="FontWeight" Value="Heavy"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Style.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <!--Depending on which control style you use, you may not need all of these -->
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Style.Resources>
+                <Setter Property="Margin" Value="0 25 0 0"/>
+            </Style>
+            <Style x:Key="VersionButton" TargetType="Button">
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="#7163ba"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="5" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#7163ba"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Margin="24 0 0 0">
 
         <Grid>
-            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0 0 0 20">
+                <TextBlock Text="Download" Style="{StaticResource subtitleText}"/>
+            </StackPanel>
+
+            <TabControl Grid.Row="1" Style="{StaticResource TabControl}">
+
+                <TabItem Style="{StaticResource TabItem}" Header="Minecraft">
+
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="10">
+
+                        <StackPanel>
+
+                            <materialDesign:Card Background="#cfd5e5" BorderThickness="2" BorderBrush="#ebedf3" UniformCornerRadius="15" Margin="0 20 0 20"
+                                                 Padding="10">
+                                <StackPanel>
+                                    <TextBlock Text="Vanilla Minecraft" Foreground="#7163ba" FontSize="20" FontWeight="SemiBold" Margin="-5 0 0 10"/>
+
+                                    <StackPanel Margin="0 20 0 0">
+                                        <TextBlock Style="{StaticResource headerText}" Text="Versions"/>
+                                        <ComboBox Style="{StaticResource ComboBox}" ItemsSource="{Binding McVersions}" SelectedItem="{Binding McVersion}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0 15 0 0">
+                                        <Button Style="{StaticResource PrimaryButton}" Content="Download" Command="{Binding DownloadVanillaMinecraftCommand}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                
+                            </materialDesign:Card>
+
+                        </StackPanel>
+
+                    </ScrollViewer>
+                    
+                </TabItem>
+
+                <TabItem Style="{StaticResource TabItem}" Header="Forge">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="10">
+
+                        <StackPanel>
+
+                            <materialDesign:Card Background="#cfd5e5" BorderThickness="2" BorderBrush="#ebedf3" UniformCornerRadius="15" Margin="0 20 0 20"
+                                                 Padding="10">
+                                <StackPanel>
+                                    <TextBlock Text="Forge Mod Loader" Foreground="#7163ba" FontSize="20" FontWeight="SemiBold" Margin="-5 0 0 10"/>
+
+                                    <StackPanel Margin="0 20 0 0">
+                                        <TextBlock Style="{StaticResource headerText}" Text="Minecraft"/>
+                                        <ComboBox Style="{StaticResource ComboBox}" ItemsSource="{Binding McVersions}" SelectedItem="{Binding ForgeMcVersion}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding McVersionPropertyChangedCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 30 0 0">
+                                        <TextBlock Style="{StaticResource headerText}" Text="Forge"/>
+                                        <ComboBox Style="{StaticResource ComboBox}" ItemsSource="{Binding ForgeVersions}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0 15 0 0">
+                                        <Button Style="{StaticResource PrimaryButton}" Content="Download" Command="{Binding DownloadForgeInstallerCommand}"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </materialDesign:Card>
+
+                        </StackPanel>
+
+                    </ScrollViewer>
+                </TabItem>
+                
+            </TabControl>
         </Grid>
     </Border>
 
